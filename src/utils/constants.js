@@ -1,0 +1,1 @@
+export const  SECRET_KEY = "mongodb+srv://HimanshuJaglyan:Himanshu123@namastenode.4ette.mongodb.net/devTinder";
