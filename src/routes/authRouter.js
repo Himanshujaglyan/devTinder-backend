@@ -69,11 +69,7 @@ authrouter.post("/login" ,async(req,res) => {
         const isPasswordMatch = await bcrypt.compare(password , user.password);
         if(isPasswordMatch){
             const token = await jwt.sign({_id:user._id}, "Dev@Tinder#786");
-            res.cookie("token", token, {
-                httpOnly: true,
-                secure: true, // HTTPS ke liye (prod mein zaroori)
-                sameSite: "None", // Jab frontend aur backend alag domain pe ho
-              });
+            res.cookie("token", token);
             res.send(user); 
         }else{
             throw new Error("Password not correct!!");
