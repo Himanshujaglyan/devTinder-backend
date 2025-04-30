@@ -61,7 +61,7 @@ const cookieParser = require("cookie-parser")
     app.use(express.json());//this is middleware which helps to convert json into js object because server can't undertand json directly
     app.use(cookieParser());
     app.use(cors({
-        origin:"http://localhost:5173",
+        origin:"https://dev-tinder-frontend-ten.vercel.app/",
         credentials:true
     }));
     app.get("/", (req, res) => {
