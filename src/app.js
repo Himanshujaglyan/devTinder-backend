@@ -61,7 +61,7 @@ const cookieParser = require("cookie-parser")
     app.use(express.json());//this is middleware which helps to convert json into js object because server can't undertand json directly
     app.use(cookieParser());
     app.use(cors({
-        origin:true,
+        origin:"https://devhim1.netlify.app/",
         credentials:true
     }));
     app.get("/", (req, res) => {
