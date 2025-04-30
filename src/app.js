@@ -64,7 +64,9 @@ const cookieParser = require("cookie-parser")
         origin:"http://localhost:5173",
         credentials:true
     }));
-    
+    app.get("/", (req, res) => {
+        res.send("Backend is running!");
+      });
     const authRouter = require("./routes/authRouter.js")
     const profileRouter = require("./routes/profileRouter.js");
     const requestRouter = require("./routes/requestRouter.js")
