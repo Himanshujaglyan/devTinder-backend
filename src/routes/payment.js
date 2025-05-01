@@ -66,7 +66,11 @@ paymentRouter.post("/payment/webhook", async (req, res) => {
       return res.status(400).json({ msg: "Webhook signature is invalid" });
     }
     // update my payment status in DB
-    const paymentDetails = req.body.payload.payment.entity;
+    if (!req.body.payload || !req.body.payload.payment || !req.body.payload.payment.entity) {
+        return res.status(400).json({ msg: "Invalid webhook payload" });
+      }
+      const paymentDetails = req.body.payload.payment.entity;
+      
 
     const payment = await Payment.findOne({ orderId: paymentDetails.order_id });
     payment.status = paymentDetails.status;
