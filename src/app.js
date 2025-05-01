@@ -61,7 +61,7 @@ const cookieParser = require("cookie-parser")
     app.use(express.json());//this is middleware which helps to convert json into js object because server can't undertand json directly
     app.use(cookieParser());
     app.use(cors({
-        origin:true, //http://localhost:5173
+        origin:"http://localhost:5173", //http://localhost:5173
         credentials:true
     }));
     app.get("/", (req, res) => {
