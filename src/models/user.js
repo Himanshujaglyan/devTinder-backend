@@ -34,6 +34,13 @@ const userschema = new mongoose.Schema({
     gender:{
         type: String
     },
+    isPremium:{
+        type: Boolean,
+        default:false
+    },
+    membershipType:{
+        type : String,
+    },
     profileImage:{
         type:String,
     }

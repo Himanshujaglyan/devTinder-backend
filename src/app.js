@@ -61,7 +61,7 @@ const cookieParser = require("cookie-parser")
     app.use(express.json());//this is middleware which helps to convert json into js object because server can't undertand json directly
     app.use(cookieParser());
     app.use(cors({
-        origin:true,
+        origin:true, //http://localhost:5173
         credentials:true
     }));
     app.get("/", (req, res) => {
@@ -71,11 +71,12 @@ const cookieParser = require("cookie-parser")
     const profileRouter = require("./routes/profileRouter.js");
     const requestRouter = require("./routes/requestRouter.js")
     const userRouter = require("./routes/userRouter.js")
-
+    const paymentRouter = require("./routes/payment.js")
     app.use("/",authRouter);
     app.use("/",profileRouter);
     app.use("/",requestRouter);
     app.use("/",userRouter);
+    app.use("/",paymentRouter)
     //Delete request
     // app.delete("/user",async(req,res)=>{ 
     //     const userId = req.body.userId;
