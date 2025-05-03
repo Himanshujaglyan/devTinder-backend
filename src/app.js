@@ -62,7 +62,7 @@ const cookieParser = require("cookie-parser")
     app.use(express.json());//this is middleware which helps to convert json into js object because server can't undertand json directly
     app.use(cookieParser());
     app.use(cors({
-        origin:"http://localhost:5173", //http://localhost:5173
+        origin:true, //http://localhost:5173
         credentials:true
     }));
     app.get("/", (req, res) => {
@@ -78,12 +78,14 @@ const cookieParser = require("cookie-parser")
     const userRouter = require("./routes/userRouter.js")
     const paymentRouter = require("./routes/payment.js");
     const initializeSocket = require('./utils/socket.js');
+const chatRouter = require('./routes/chat.js');
 
     app.use("/",authRouter);
     app.use("/",profileRouter);
     app.use("/",requestRouter);
     app.use("/",userRouter);
     app.use("/",paymentRouter)
+    app.use("/",chatRouter)
     //Delete request
     // app.delete("/user",async(req,res)=>{ 
     //     const userId = req.body.userId;
@@ -128,6 +130,11 @@ const cookieParser = require("cookie-parser")
     //websocket
     const server = http.createServer(app);
     initializeSocket(server);
+    //Global Error Handler
+    app.use((err,req,res,next)=>{
+        console.log(err.stack)
+        return res.status(500).json({msg:"Something went wrong"})
+    })
 
 connectDB()
     .then(()=>{
