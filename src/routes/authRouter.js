@@ -7,30 +7,41 @@ const validator = require("validator")
 const jwt = require("jsonwebtoken");
 const catchAsync = require("../utils/catchAsync");
 
-
 authrouter.post("/signup", async (req, res) => {
     try {
-        validatesignupdata(req); //  Agar yahan error aayi toh catch block me chali jayegi
-        const {firstName,lastName,emailId,password,age,gender,fatherName,profileImage} = req.body;
-        const passwordHash = await bcrypt.hash(password,10);
-        // console.log(passwordHash);
+        validatesignupdata(req); // Custom validation logic (must throw Error on fail)
+
+        const {firstName, lastName, emailId, password, age, gender, fatherName, profileImage} = req.body;
+        const passwordHash = await bcrypt.hash(password, 10);
+
         const user = new User({
             firstName,
-            lastName, 
-            emailId, 
-            password : passwordHash
+            lastName,
+            emailId,
+            password: passwordHash
         });
 
         const savedUser = await user.save();
         const token = await savedUser.getJWT();
-        res.cookie("token",token,{
-            expires:new Date(Date.now() + 8 * 3600000),
+
+        res.cookie("token", token, {
+            expires: new Date(Date.now() + 8 * 3600000),
+            httpOnly: true
         });
-        res.json({message : "User successfully Added!", data:savedUser});
+
+        res.status(201).json({ 
+            message: "User successfully registered!",
+            data: savedUser 
+        });
+
     } catch (err) {
-        res.status(400).send("Validation Error: " + err.message); // 🛠️ Error ka proper response
+        res.status(400).json({
+            error: true,
+            message: err.message || "An unknown error occurred during signup."
+        });
     }
 });
+
 
 //Get Request
 authrouter.get("/signup", async(req,res)=>{
@@ -63,7 +74,7 @@ authrouter.post("/login" ,async(req,res) => {
 
 
         if(!user){
-            throw new Error("User not found in DB");
+            throw new Error("User Not Found");
         }
         
         const isPasswordMatch = await bcrypt.compare(password , user.password);
@@ -80,7 +91,7 @@ authrouter.post("/login" ,async(req,res) => {
         }
     }
     catch(err){
-        res.status(400).send("Error : " + err.message);
+        res.status(400).send(err.message);
     }
 });
 

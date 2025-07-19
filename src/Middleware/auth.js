@@ -1,25 +1,6 @@
 const jwt = require("jsonwebtoken")
 const User = require("../models/user")
-//  const adminauth = (req,res,next)=>{
-//     const token = "xyz";
-//     const isAuthenticate = token === "xyz";
-//     if(!isAuthenticate){
-//         console.log("no ")
-//         res.status(401).send("Your are not a valid user!!");
-//     }else{
-//         next();
-//     }
-// }
-//  const userauth = (req,res,next)=>{
-//     const token = "xyz";
-//     const isAuthenticate = token === "xyz";
-//     if(!isAuthenticate){
-//         console.log("no ")
-//         res.status(401).send("Your are not a valid user!!");
-//     }else{
-//         next();
-//     }
-// }
+
 
 const userauth = async (req,res,next)=>{
     try{ 
@@ -37,7 +18,7 @@ const userauth = async (req,res,next)=>{
     next();
     }
     catch(err){
-        res.status(400).send("Error : "+err.message);
+        res.status(400).send(err.message);
     }
    
 }

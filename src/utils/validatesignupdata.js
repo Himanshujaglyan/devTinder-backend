@@ -13,7 +13,7 @@ const validatesignupdata = (req) => {
         throw new Error("Email is not valid");
     } 
     else if (!validator.isStrongPassword(password)) {
-        throw new Error("Password must be at least 8 characters long with 1 uppercase, 1 number, and 1 special character.");
+        throw new Error("Password must be at least 8 characters");
     }
 };
 

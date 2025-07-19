@@ -32,9 +32,12 @@ userRouter.get("/user/request", userauth, async (req, res) => {
 
 userRouter.get("/user/connections", userauth, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ message: "Unauthorized access" });
+    }
     const loggedUser = req.user;
     const connectionRequests = await ConnectionRequests.find({
-      $or: [
+      $or: [  
         { touserId: loggedUser._id, status: "accepted" },
         { fromuserId: loggedUser._id, status: "accepted" },
       ],
